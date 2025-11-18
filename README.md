@@ -1,4 +1,4 @@
-# **Theseus --- URL Shortener**
+# **Theseus URL Shortener**
 
 Theseus is a minimal, high-performance URL shortener built with **Next.js App Router**, **Postgres**, and **Upstash Redis**, designed for edge-cached 301 redirects and long-term cache semantics.
 
@@ -85,10 +85,12 @@ npm install
 
 ### 3\. Create `.env.local`
 
-`DATABASE_URL="postgresql://..."
+```bash
+DATABASE_URL="postgresql://..."
 UPSTASH_REDIS_REST_URL="https://..."
 UPSTASH_REDIS_REST_TOKEN="your-token"
-BASE_URL="http://localhost:3000"`
+BASE_URL="http://localhost:3000"
+```
 
 ### 4\. Initialize Prisma
 
@@ -105,17 +107,21 @@ npm run dev
 
 Application will be available at:
 
-`http://localhost:3000`
+```bash
+http://localhost:3000
+```
 
 ---
 
 ## **Database Schema (Prisma)**
 
-`model Url {
+```bash
+model Url {
   code      String   @id
   long_url  String
   createdAt DateTime @default(now())
-}`
+}
+```
 
 ---
 
