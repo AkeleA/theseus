@@ -1,36 +1,174 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Theseus --- URL Shortener**
 
-## Getting Started
+Theseus is a minimal, high-performance URL shortener built with **Next.js App Router**, **Postgres**, and **Upstash Redis**, designed for edge-cached 301 redirects and long-term cache semantics.
 
-First, run the development server:
+It is built to be small, auditable, extremely fast, and easy to deploy on Vercel.
+
+---
+
+## **Features**
+
+- Fast 301 redirects served from the Edge runtime
+
+- Redis-accelerated lookups with 1-year cache TTL
+
+- Postgres for durable canonical storage
+
+- Custom alias support (optional)
+
+- Strong input validation (Zod)
+
+- Rate limiting per IP
+
+- Vitest test suite covering backend, edge routes, and UI
+
+- Brutalist UI with QR-code generation
+
+- Fully compatible with Vercel deployment
+
+---
+
+## **Architecture Overview**
+
+```bash
+api/shorten (Node runtime) → Postgres
+               │
+               ▼
+      [code] route (Edge runtime)
+               │
+               ▼
+             Redis
+               │
+               ▼
+           301 redirect
+```
+
+Flow:
+
+1.  Client sends long URL (optional alias).
+
+2.  `POST /api/shorten` validates input and writes to Postgres.
+
+3.  Redirect route `/[code]` first checks Redis.
+
+4.  If cache miss → fallback to DB → warm Redis.
+
+5.  Response includes `301` + `Cache-Control: max-age=31536000`.
+
+---
+
+## **Technology Choices**
+
+**Next.js App Router** -- combines Node and Edge runtimes cleanly.\
+**Postgres** -- structured, durable URL storage.\
+**Upstash Redis** -- extremely low-latency lookups.\
+**Prisma** -- schema-first DB layer with type safety.\
+**Vitest** -- fast test runner used for API and UI tests.\
+**Zod** -- robust runtime validation.
+
+---
+
+## **Getting Started**
+
+### 1\. Clone the repository
+
+```bash
+git clone https://github.com/akelea/theseus.git
+cd theseus
+```
+
+### 2\. Install dependencies
+
+```bash
+npm install
+```
+
+### 3\. Create `.env.local`
+
+`DATABASE_URL="postgresql://..."
+UPSTASH_REDIS_REST_URL="https://..."
+UPSTASH_REDIS_REST_TOKEN="your-token"
+BASE_URL="http://localhost:3000"`
+
+### 4\. Initialize Prisma
+
+```bash
+npx prisma generate
+npx prisma migrate dev
+```
+
+### 5\. Start development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Application will be available at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`http://localhost:3000`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## **Database Schema (Prisma)**
 
-To learn more about Next.js, take a look at the following resources:
+`model Url {
+  code      String   @id
+  long_url  String
+  createdAt DateTime @default(now())
+}`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## **Running Tests**
 
-## Deploy on Vercel
+Tests use Vitest and include mocks for Redis, fetch, DB writes, and Next.js route handlers.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To run the suite:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx vitest
+```
+
+Includes tests for:
+
+- Base62 generator
+
+- Rate limiter
+
+- Shorten API
+
+- Redirect handler
+
+- Admin invalidation
+
+- UI smoke tests
+
+---
+
+## **Production Behavior**
+
+- Redirects are served at the edge for low latency.
+
+- Redis stores hot entries for fast resolution.
+
+- Postgres is only used when a cache miss occurs.
+
+- Alias collision returns `409 Conflict`.
+
+- Random codes retry automatically on conflict.
+
+- 301 redirects contain 1-year cache TTL.
+
+---
+
+## **Roadmap**
+
+- Click analytics (geo, device, referrer)
+
+- Expiring links
+
+- QR download button
+
+- Admin dashboard
+
+- Link collections

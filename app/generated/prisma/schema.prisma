@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Url {
+  code      String   @id @db.Char(9)
+  longUrl   String   @db.Text
+  createdAt DateTime @default(now())
+  createdBy String?
+  isActive  Boolean  @default(true)
+
+  @@index([createdAt])
+  @@index([createdBy])
+}
+
+model ClickDaily {
+  id    String   @id @default(cuid())
+  code  String
+  day   DateTime
+  count Int      @default(0)
+
+  @@unique([code, day])
+  @@index([day])
+}
