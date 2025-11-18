@@ -78,17 +78,17 @@ export default function HomePage() {
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-mono">
       {/* Header - Brutalist Typography */}
       <header className="border-b-4 border-lime-400 bg-black">
-        <div className="max-w-6xl mx-auto px-6 py-8">
-          <div className="flex items-end justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
-              <h1 className="text-7xl font-black tracking-tighter text-lime-400 leading-none mb-2">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-lime-400 leading-none mb-2">
                 HERMES
               </h1>
-              <p className="text-lg text-zinc-400 tracking-wide">
+              <p className="text-sm sm:text-base md:text-lg text-zinc-400 tracking-wide">
                 ↓ SPEEDY URL COMPRESSION TERMINAL ↓
               </p>
             </div>
-            <div className="text-right">
+            <div className="text-left sm:text-right">
               <div className="text-xs text-zinc-500 mb-1">STATUS</div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-lime-400 animate-pulse" />
@@ -99,32 +99,28 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-12 space-y-5">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-5">
         {/* Info Banner */}
-        <div className="border-2 border-zinc-700 bg-zinc-900 p-4 mb-8 relative overflow-hidden">
+        <div className="border-2 border-zinc-700 bg-zinc-900 p-3 sm:p-4 mb-6 sm:mb-8 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1 h-full bg-lime-400" />
-          <div className="pl-4">
+          <div className="pl-3 sm:pl-4">
             <div className="text-xs text-zinc-500 mb-1">SYSTEM INFO</div>
-            <p className="text-sm text-zinc-300">
+            <p className="text-xs sm:text-sm text-zinc-300">
               Edge-cached 301 redirects · Base62 encoding · 9-character codes
             </p>
           </div>
         </div>
 
         {/* Main Input Section */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <div className="border-2 border-zinc-700 bg-zinc-900">
-            {/* <div className="bg-zinc-800 px-4 py-2 border-b-2 border-zinc-700 flex items-center justify-between">
-              <span className="text-xs font-bold text-lime-400">INPUT_01</span>
-              <span className="text-xs text-zinc-500">REQUIRED</span>
-            </div> */}
-            <div className="p-4">
+            <div className="p-3 sm:p-4">
               <label className="block text-xs text-zinc-400 mb-2 uppercase tracking-wider">
                 Long URL
               </label>
               <input
-                className="w-full bg-black border-2 border-zinc-700 text-zinc-100 px-4 py-3 text-sm focus:outline-none focus:border-lime-400 transition-colors font-mono"
-                placeholder="https://example.com/very/long/path/to/something"
+                className="w-full bg-black border-2 border-zinc-700 text-zinc-100 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm focus:outline-none focus:border-lime-400 transition-colors font-mono"
+                placeholder="https://example.com/very/long/path"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -133,16 +129,12 @@ export default function HomePage() {
           </div>
 
           <div className="border-2 border-zinc-700 bg-zinc-900">
-            {/* <div className="bg-zinc-800 px-4 py-2 border-b-2 border-zinc-700 flex items-center justify-between">
-              <span className="text-xs font-bold text-zinc-400">INPUT_02</span>
-              <span className="text-xs text-zinc-500">OPTIONAL</span>
-            </div> */}
-            <div className="p-4">
+            <div className="p-3 sm:p-4">
               <label className="block text-xs text-zinc-400 mb-2 uppercase tracking-wider">
                 Custom Alias
               </label>
               <input
-                className="w-full bg-black border-2 border-zinc-700 text-zinc-100 px-4 py-3 text-sm focus:outline-none focus:border-zinc-500 transition-colors font-mono"
+                className="w-full bg-black border-2 border-zinc-700 text-zinc-100 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm focus:outline-none focus:border-zinc-500 transition-colors font-mono"
                 placeholder="my-custom-shortcode"
                 value={alias}
                 onChange={(e) => setAlias(e.target.value)}
@@ -154,7 +146,7 @@ export default function HomePage() {
           <button
             onClick={handleSubmit}
             disabled={loading || !input}
-            className="w-full bg-lime-400 text-black font-bold py-4 px-6 text-sm uppercase tracking-widest hover:bg-lime-300 disabled:bg-zinc-700 disabled:text-zinc-500 transition-all border-2 border-black hover:border-lime-500 relative overflow-hidden group"
+            className="w-full bg-lime-400 text-black font-bold py-3 sm:py-4 px-4 sm:px-6 text-xs sm:text-sm uppercase tracking-widest hover:bg-lime-300 disabled:bg-zinc-700 disabled:text-zinc-500 transition-all border-2 border-black hover:border-lime-500 relative overflow-hidden group"
           >
             <span className={loading ? "opacity-0" : ""}>
               → Execute Compression
@@ -169,12 +161,16 @@ export default function HomePage() {
 
         {/* Error Display */}
         {err && (
-          <div className="border-2 border-red-500 bg-red-950/30 p-4 w-full mx-auto">
+          <div className="border-2 border-red-500 bg-red-950/30 p-3 sm:p-4 w-full mx-auto">
             <div className="flex items-start gap-3">
-              <span className="text-red-500 font-bold text-lg">⚠</span>
-              <div>
+              <span className="text-red-500 font-bold text-base sm:text-lg">
+                ⚠
+              </span>
+              <div className="flex-1 min-w-0">
                 <div className="text-xs text-red-400 mb-1">ERROR</div>
-                <p className="text-sm text-red-300">{err}</p>
+                <p className="text-xs sm:text-sm text-red-300 wrap-break-word">
+                  {err}
+                </p>
               </div>
             </div>
           </div>
@@ -183,25 +179,25 @@ export default function HomePage() {
         {/* Result Display */}
         {result && (
           <div className="rounded-lg shadow-2xs bg-black w-full flex flex-col items-center justify-center">
-            <div className="bg-lime-400 text-black px-4 py-3 font-bold text-sm uppercase tracking-wider">
+            <div className="w-full bg-lime-400 text-black px-3 sm:px-4 py-2 sm:py-3 font-bold text-xs sm:text-sm uppercase tracking-wider text-center">
               ✓ Compression Complete
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="w-full p-4 sm:p-6 space-y-4 sm:space-y-6">
               {/* URL Display */}
               <div>
                 <div className="text-xs text-zinc-500 mb-2 uppercase">
                   Output URL
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <input
-                    className="flex-1 bg-zinc-900 border-2 border-zinc-700 text-lime-400 px-4 py-3 text-sm font-mono"
+                    className="flex-1 bg-zinc-900 border-2 border-zinc-700 text-lime-400 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-mono min-w-0"
                     readOnly
                     value={result}
                   />
                   <button
                     onClick={handleCopy}
-                    className="px-6 bg-zinc-900 border-2 border-zinc-700 hover:border-lime-400 hover:text-lime-400 transition-all text-sm font-bold uppercase"
+                    className="px-4 sm:px-6 py-2 sm:py-3 bg-zinc-900 border-2 border-zinc-700 hover:border-lime-400 hover:text-lime-400 transition-all text-xs sm:text-sm font-bold uppercase whitespace-nowrap"
                   >
                     {copied ? "✓" : "Copy"}
                   </button>
@@ -210,23 +206,18 @@ export default function HomePage() {
 
               {/* QR Code */}
               {qr && (
-                <div className="w-full flex flex-col items-center justify-center space-y-2 border-t-2 border-zinc-800">
-                  <div className="text-sm text-white uppercase">QR Matrix</div>
-                  <div className="flex gap-6">
-                    <div className="border-2 border-zinc-700 bg-white">
-                      <Image
-                        src={qr}
-                        alt="QR code"
-                        width={400}
-                        height={400}
-                        className="object-contain"
-                      />
-                    </div>
-                    {/* <div className="flex-1 flex flex-col justify-center text-xs text-zinc-400 space-y-1">
-                      <p>→ Scannable matrix generated</p>
-                      <p>→ 200x200px resolution</p>
-                      <p>→ High contrast encoding</p>
-                    </div> */}
+                <div className="w-full flex flex-col items-center justify-center space-y-3 sm:space-y-4 pt-4 border-t-2 border-zinc-800">
+                  <div className="text-xs sm:text-sm text-white uppercase">
+                    QR Matrix
+                  </div>
+                  <div className="border-2 border-zinc-700 bg-white p-2 sm:p-3">
+                    <Image
+                      src={qr}
+                      alt="QR code"
+                      width={200}
+                      height={200}
+                      className="w-40 h-40 sm:w-64 sm:h-64 md:w-80 md:h-80 object-contain"
+                    />
                   </div>
                 </div>
               )}
@@ -235,17 +226,23 @@ export default function HomePage() {
         )}
 
         {/* Footer Stats */}
-        <div className="mt-6 grid grid-cols-3 gap-4">
-          <div className="border border-zinc-800 bg-zinc-900/50 p-4">
-            <div className="text-2xl font-bold text-lime-400">301</div>
+        <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-2 sm:gap-4">
+          <div className="border border-zinc-800 bg-zinc-900/50 p-3 sm:p-4">
+            <div className="text-lg sm:text-2xl font-bold text-lime-400">
+              301
+            </div>
             <div className="text-xs text-zinc-500 uppercase">Redirect Type</div>
           </div>
-          <div className="border border-zinc-800 bg-zinc-900/50 p-4">
-            <div className="text-2xl font-bold text-lime-400">BASE62</div>
+          <div className="border border-zinc-800 bg-zinc-900/50 p-3 sm:p-4">
+            <div className="text-lg sm:text-2xl font-bold text-lime-400">
+              BASE62
+            </div>
             <div className="text-xs text-zinc-500 uppercase">Encoding</div>
           </div>
-          <div className="border border-zinc-800 bg-zinc-900/50 p-4">
-            <div className="text-2xl font-bold text-lime-400">9-CHAR</div>
+          <div className="border border-zinc-800 bg-zinc-900/50 p-3 sm:p-4">
+            <div className="text-lg sm:text-2xl font-bold text-lime-400">
+              9-CHAR
+            </div>
             <div className="text-xs text-zinc-500 uppercase">Code Length</div>
           </div>
         </div>
