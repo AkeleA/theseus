@@ -82,7 +82,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-lime-400 leading-none mb-2">
-                HERMES
+                THESEUS
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-zinc-400 tracking-wide">
                 ↓ SPEEDY URL COMPRESSION TERMINAL ↓
